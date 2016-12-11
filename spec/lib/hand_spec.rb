@@ -40,5 +40,32 @@ RSpec.describe Hand do
       end
     end
   end
+
+  describe '#hand_type' do
+    subject { hand.hand_type }
+
+    context 'hand is a flush' do
+      let(:card_names) { %w(2H 3H 4H 5H 6H) }
+
+      it { is_expected.to eq(:flush) }
+    end
+
+    context 'hand is a three of a kind' do
+      let(:card_names) { %w(3H 3D 3C 5H 6H) }
+
+      it { is_expected.to eq(:three_of_a_kind) }
+    end
+
+    context 'hand is one pair' do
+      let(:card_names) { %w(JH JD 3C 5H 6H) }
+
+      it { is_expected.to eq(:one_pair) }
+    end
+
+    context 'hand is high card' do
+      let(:card_names) { %w(2D 3H 4H 5H 6H) }
+
+      it { is_expected.to eq(:high_card) }
+    end
   end
 end
