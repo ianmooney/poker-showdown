@@ -5,7 +5,7 @@ class Hand
 
   def initialize(player_name, card_names)
     @player_name = player_name
-    @cards = [*card_names].collect {|name| Card.new(name) }
+    @cards = [*card_names].collect { |name| Card.new(name) }
     validate!
   end
 
@@ -15,6 +15,8 @@ class Hand
       raise Errors::InvalidHand, 'Player name is blank.'
     elsif cards.size != NUM_CARDS
       raise Errors::InvalidHand, "Needs exactly #{NUM_CARDS} cards."
+    elsif cards.collect(&:name).uniq.size != NUM_CARDS
+      raise Errors::InvalidHand, "Contains duplicate cards."
     end
   end
 end

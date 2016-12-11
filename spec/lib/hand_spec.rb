@@ -31,5 +31,14 @@ RSpec.describe Hand do
         expect{ hand }.to raise_error(Errors::InvalidHand, "Needs exactly 5 cards.")
       end
     end
+
+    context 'contains duplicate card' do
+      let(:card_names)  { %w(KH KH KC 4S 8H) }
+
+      it 'raises error' do
+        expect{ hand }.to raise_error(Errors::InvalidHand, "Contains duplicate cards.")
+      end
+    end
+  end
   end
 end
