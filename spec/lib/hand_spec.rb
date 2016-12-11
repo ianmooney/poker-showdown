@@ -1,17 +1,9 @@
 RSpec.describe Hand do
-  describe '#initialize' do
-    let(:hand) { Hand.new(player_name, cards) }
-    let(:player_name) { 'Joe' }
-    let(:cards) do
-      [
-        Card.new('KH'),
-        Card.new('KD'),
-        Card.new('KC'),
-        Card.new('4S'),
-        Card.new('8H')
-      ]
-    end
+  let(:hand)        { Hand.new(player_name, card_names) }
+  let(:player_name) { 'Joe' }
+  let(:card_names)  { %w(KH KD KC 4S 8H) }
 
+  describe '#initialize' do
     it 'is valid' do
       expect{ hand }.not_to raise_error
     end
@@ -33,7 +25,7 @@ RSpec.describe Hand do
     end
 
     context 'incorrect number of cards' do
-      let(:cards) { [] }
+      let(:card_names) { [] }
 
       it 'raises error' do
         expect{ hand }.to raise_error(Errors::InvalidHand, "Needs exactly 5 cards.")

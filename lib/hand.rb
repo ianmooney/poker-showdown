@@ -3,9 +3,9 @@ class Hand
 
   attr_accessor :player_name, :cards
 
-  def initialize(player_name, cards)
+  def initialize(player_name, card_names)
     @player_name = player_name
-    @cards = [*cards]
+    @cards = [*card_names].collect {|name| Card.new(name) }
     validate!
   end
 
