@@ -39,33 +39,37 @@ RSpec.describe Hand do
         expect{ hand }.to raise_error(Errors::InvalidHand, "Contains duplicate cards.")
       end
     end
-  end
 
-  describe '#hand_type' do
-    subject { hand.hand_type }
+    context 'when determining type' do
+      context 'hand is a flush' do
+        let(:card_names) { %w(2H 3H 4H 5H 6H) }
 
-    context 'hand is a flush' do
-      let(:card_names) { %w(2H 3H 4H 5H 6H) }
+        it { expect(hand.type).to eq(Hand::FLUSH) }
+      end
 
-      it { is_expected.to eq(:flush) }
-    end
+      context 'hand is a three of a kind' do
+        let(:card_names) { %w(3H 3D 3C 5H 6H) }
 
-    context 'hand is a three of a kind' do
-      let(:card_names) { %w(3H 3D 3C 5H 6H) }
+        it { expect(hand.type).to eq(Hand::THREE_OF_A_KIND) }
+      end
 
-      it { is_expected.to eq(:three_of_a_kind) }
-    end
+      context 'hand is a four of a kind' do
+        let(:card_names) { %w(3H 3D 3C 3S 6H) }
 
-    context 'hand is one pair' do
-      let(:card_names) { %w(JH JD 3C 5H 6H) }
+        it { expect(hand.type).to eq(Hand::THREE_OF_A_KIND) }
+      end
 
-      it { is_expected.to eq(:one_pair) }
-    end
+      context 'hand is one pair' do
+        let(:card_names) { %w(JH JD 3C 5H 6H) }
 
-    context 'hand is high card' do
-      let(:card_names) { %w(2D 3H 4H 5H 6H) }
+        it { expect(hand.type).to eq(Hand::ONE_PAIR) }
+      end
 
-      it { is_expected.to eq(:high_card) }
+      context 'hand is high card' do
+        let(:card_names) { %w(2D 3H 4H 5H 6H) }
+
+        it { expect(hand.type).to eq(Hand::HIGH_CARD) }
+      end
     end
   end
 end

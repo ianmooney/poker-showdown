@@ -1,30 +1,23 @@
 class Hand
   NUM_CARDS = 5
-  TYPES = {
-    flush:           'Flush',
-    three_of_a_kind: 'Three of a Kind',
-    one_pair:        'One Pair',
-    high_card:       'High Card'
-  }
 
-  attr_accessor :player_name, :cards
+  # Hand types
+  FLUSH           = 4
+  THREE_OF_A_KIND = 3
+  ONE_PAIR        = 2
+  HIGH_CARD       = 1
+
+  attr_accessor :player_name, :cards, :type
 
   def initialize(player_name, card_names)
     @player_name = player_name
     @cards = [*card_names].collect { |name| Card.new(name) }
-    validate!
-  end
 
-  def hand_type
-    if cards.collect(&:suit).uniq.count == 1
-      :flush
-    elsif sorted_card_ranks.values.any? { |v| v >= 3 }
-      :three_of_a_kind
-    elsif sorted_card_ranks.values.any? { |v| v == 2 }
-      :one_pair
-    else
-      :high_card
-    end
+    # Run validations and return errors if neccessary
+    validate!
+
+    # Determine the hand type: Flush, Three of a Kind, One Pair or High Card
+    @type = determine_type(@cards)
   end
 
   private
@@ -38,6 +31,22 @@ class Hand
     end
   end
 
+  def determine_type(cards)
+    if cards.collect(&:suit).uniq.count == 1
+      # If all suits are the same, it is a flush
+      FLUSH
+    elsif card_rank_counts.values.any? { |v| v >= 3 }
+      # If the same rank occurs at least 3 times, it is a three of a kind
+      THREE_OF_A_KIND
+    elsif card_rank_counts.values.any? { |v| v == 2 }
+      # If the same rank occurs twice, it is a one pair
+      ONE_PAIR
+    else
+      # Otherwise if none of the above, it defaults to high card
+      HIGH_CARD
+    end
+  end
+
   # Returns a hash of card ranks and the number of cards with that rank
   # e.g. a hand of [4H, 4D, 4C, KS, QH]
   # {
@@ -45,7 +54,7 @@ class Hand
   #   'K' => 1,
   #   'Q' => 1
   # }
-  def sorted_card_ranks
+  def card_rank_counts
     cards.inject(Hash.new(0)) do |hash, card|
       hash[card.rank] += 1
       hash
