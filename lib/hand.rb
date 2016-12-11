@@ -59,19 +59,34 @@ class Hand
     when FLUSH, HIGH_CARD
       sorted_ranks
     when THREE_OF_A_KIND
-      matching_ranks = card_rank_counts.select { |k, v| v >= 3 }
-      matching_rank = matching_ranks.keys.max
-      3.times { sorted_ranks.slice!(sorted_ranks.index(matching_rank)) }
-      [matching_rank]*3 + sorted_ranks
+      ranks_with_triple_at_front(sorted_ranks)
     when ONE_PAIR
-      matching_ranks = card_rank_counts.select { |k, v| v == 2 }
-      matching_rank = matching_ranks.keys.max
-      2.times { sorted_ranks.slice!(sorted_ranks.index(matching_rank)) }
-      [matching_rank]*2 + sorted_ranks
+      ranks_with_pair_at_front(sorted_ranks)
     end
   end
 
   private
+
+  def ranks_with_triple_at_front(ranks)
+    # Find the rank that occurs 3 times (there can only be one)
+    tripled_rank = card_rank_counts.detect{ |k, v| v >= 3 }[0]
+    # Remove 3 instances of the rank (exactly 3, in case it occurs 4 times)
+    3.times { ranks.slice!(ranks.index(tripled_rank)) }
+    # Prepend the 3 ranks to the front of array
+    [tripled_rank]*3 + ranks
+  end
+
+  def ranks_with_pair_at_front(ranks)
+    # Find all ranks that occur exactly twice
+    paired_ranks = card_rank_counts.select { |k, v| v == 2 }
+    # Find the paired rank that has the highest value, we'll ignore any others
+    paired_rank = paired_ranks.keys.max
+    # Remove the 2 instances of the rank
+    ranks.delete(paired_rank)
+    # Prepend the 2 ranks to the front of array
+    [paired_rank]*2 + ranks
+  end
+
   def validate!
     if [nil, ''].include?(player_name)
       raise Errors::InvalidHand, 'Player name is blank.'
@@ -106,7 +121,7 @@ class Hand
   #   'Q' => 1
   # }
   def card_rank_counts
-    cards.inject(Hash.new(0)) do |hash, card|
+    @card_rank_counts ||= cards.inject(Hash.new(0)) do |hash, card|
       hash[card.rank] += 1
       hash
     end
