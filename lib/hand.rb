@@ -45,6 +45,10 @@ class Hand
     other_hand.type <=> type
   end
 
+  def ties_with?(other_hand)
+    (self <=> other_hand) == 0
+  end
+
   protected
 
   # Returns all card ranks, sorted depending on the hand type
