@@ -16,6 +16,7 @@ class Card
   end
 
   private
+  
   def rank_from_name(name)
     rank = name.chop # Remove last character (the suit)
 

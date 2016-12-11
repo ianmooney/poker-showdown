@@ -25,7 +25,50 @@ class Hand
   # Returns 0 if both hands are equal
   # Returns 1 if the other hand is better
   def <=>(other_hand)
-    # TODO: Implement this
+    if other_hand.type == type
+      # If both hands are the same type, we need to compare the card ranks
+      # Loop through all ranks, which are specially sorted depending on type, see #sorted_card_ranks
+      sorted_card_ranks.each_with_index do |rank, i|
+        other_rank = other_hand.sorted_card_ranks[i]
+
+        if other_rank == rank
+          # If cards are the same rank, then move on and compare the next card
+          next
+        else
+          # If cards are different, compare ranks to see which one is higher
+          return other_rank <=> rank
+        end
+      end
+    end
+
+    # Otherwise fall back to comparing the hand types, e.g. Flush beats One Pair
+    other_hand.type <=> type
+  end
+
+  protected
+
+  # Returns all card ranks, sorted depending on the hand type
+  # e.g.
+  # Flush or High Card: return ranks highest to lowest
+  # Three of a Kind:    return 3 matching ranks first, then the rest highest to lowest
+  # One Pair:           return 2 paired ranks first, then the rest highest to lowest
+  def sorted_card_ranks
+    sorted_ranks = cards.collect(&:rank).sort.reverse
+
+    case type
+    when FLUSH, HIGH_CARD
+      sorted_ranks
+    when THREE_OF_A_KIND
+      matching_ranks = card_rank_counts.select { |k, v| v >= 3 }
+      matching_rank = matching_ranks.keys.max
+      3.times { sorted_ranks.slice!(sorted_ranks.index(matching_rank)) }
+      [matching_rank]*3 + sorted_ranks
+    when ONE_PAIR
+      matching_ranks = card_rank_counts.select { |k, v| v == 2 }
+      matching_rank = matching_ranks.keys.max
+      2.times { sorted_ranks.slice!(sorted_ranks.index(matching_rank)) }
+      [matching_rank]*2 + sorted_ranks
+    end
   end
 
   private
