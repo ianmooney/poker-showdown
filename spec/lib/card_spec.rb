@@ -5,42 +5,42 @@ RSpec.describe Card do
     context 'name is 2D' do
       let(:name) { '2D' }
 
-      it { expect(card.value).to eq(2) }
+      it { expect(card.rank).to eq(2) }
       it { expect(card.suit).to eq('D') }
     end
 
     context 'name is 10C' do
       let(:name) { '10C' }
 
-      it { expect(card.value).to eq(10) }
+      it { expect(card.rank).to eq(10) }
       it { expect(card.suit).to eq('C') }
     end
 
     context 'name is JC' do
       let(:name) { 'JC' }
 
-      it { expect(card.value).to eq(11) }
+      it { expect(card.rank).to eq(11) }
       it { expect(card.suit).to eq('C') }
     end
 
     context 'name is QS' do
       let(:name) { 'QS' }
 
-      it { expect(card.value).to eq(12) }
+      it { expect(card.rank).to eq(12) }
       it { expect(card.suit).to eq('S') }
     end
 
     context 'name is KH' do
       let(:name) { 'KH' }
 
-      it { expect(card.value).to eq(13) }
+      it { expect(card.rank).to eq(13) }
       it { expect(card.suit).to eq('H') }
     end
 
     context 'name is AH' do
       let(:name) { 'AH' }
 
-      it { expect(card.value).to eq(14) }
+      it { expect(card.rank).to eq(14) }
       it { expect(card.suit).to eq('H') }
     end
 

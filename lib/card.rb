@@ -1,29 +1,29 @@
 class Card
   SUITS = ['H', 'D', 'C', 'S']
-  LETTER_VALUES = {
+  NON_INTEGER_RANKS = {
     'J' => 11,
     'Q' => 12,
     'K' => 13,
     'A' => 14
   }
 
-  attr_accessor :name, :value, :suit
+  attr_accessor :name, :rank, :suit
 
   def initialize(name)
     @name = name
-    @value = value_from_name(name)
+    @rank = rank_from_name(name)
     @suit = suit_from_name(name)
   end
 
   private
-  def value_from_name(name)
-    value = name.chop # Remove last character (the suit)
+  def rank_from_name(name)
+    rank = name.chop # Remove last character (the suit)
 
-    if value.to_i > 1 && value.to_i < 11
-      # Only allow values 2 to 10
-      value.to_i
-    elsif LETTER_VALUES[value]
-      LETTER_VALUES[value]
+    if rank.to_i > 1 && rank.to_i < 11
+      # Only allow ranks 2 to 10
+      rank.to_i
+    elsif NON_INTEGER_RANKS[rank]
+      NON_INTEGER_RANKS[rank]
     else
       raise Errors::InvalidCard, "#{name} is an invalid card."
     end
