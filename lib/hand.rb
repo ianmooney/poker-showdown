@@ -20,6 +20,14 @@ class Hand
     @type = determine_type(@cards)
   end
 
+  # Compares this hand with another hand so that an array of hands can be sorted
+  # Returns -1 if this hand is better
+  # Returns 0 if both hands are equal
+  # Returns 1 if the other hand is better
+  def <=>(other_hand)
+    # TODO: Implement this
+  end
+
   private
   def validate!
     if [nil, ''].include?(player_name)
