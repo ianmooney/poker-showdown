@@ -95,9 +95,9 @@ class Hand
     if [nil, ''].include?(player_name)
       raise Errors::InvalidHand, 'Player name is blank.'
     elsif cards.size != NUM_CARDS
-      raise Errors::InvalidHand, "Needs exactly #{NUM_CARDS} cards."
+      raise Errors::InvalidHand, "Hands needs exactly #{NUM_CARDS} cards."
     elsif cards.collect(&:name).uniq.size != NUM_CARDS
-      raise Errors::InvalidHand, "Contains duplicate cards."
+      raise Errors::InvalidHand, "Hand contains duplicate cards."
     end
   end
 
