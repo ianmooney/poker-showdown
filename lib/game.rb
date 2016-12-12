@@ -1,3 +1,6 @@
+# This class represents a game of poker.
+# It accepts an array of Hand objects and determines the winning hands.
+# e.g. game = Game.new([<Hand>, <Hand>, ..])
 class Game
   attr_accessor :winning_hands
 

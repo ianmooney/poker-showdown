@@ -1,3 +1,6 @@
+# This class represents a hand of cards.
+# It accepts a string of the player name and an array of 5 card names.
+# e.g. hand = Hand.new('Joe', ['3H', '4S', 'JC', '8D', '5H'])
 class Hand
   NUM_CARDS = 5
 

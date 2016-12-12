@@ -1,3 +1,5 @@
+# This class represents a playing card, e.g. the Queen of Hearts
+# e.g. card = Card.new('QH')
 class Card
   SUITS = ['H', 'D', 'C', 'S']
   NON_INTEGER_RANKS = {
@@ -13,10 +15,11 @@ class Card
     @name = name
     @rank = rank_from_name(name)
     @suit = suit_from_name(name)
+    validate!
   end
 
   private
-  
+
   def rank_from_name(name)
     rank = name.chop # Remove last character (the suit)
 
@@ -25,17 +28,16 @@ class Card
       rank.to_i
     elsif NON_INTEGER_RANKS[rank]
       NON_INTEGER_RANKS[rank]
-    else
-      raise Errors::InvalidCard, "#{name} is an invalid card."
     end
   end
 
   def suit_from_name(name)
     suit = name[-1] # Get last character
+    suit if SUITS.include?(suit)
+  end
 
-    if SUITS.include?(suit)
-      suit
-    else
+  def validate!
+    if rank.nil? || suit.nil?
       raise Errors::InvalidCard, "#{name} is an invalid card."
     end
   end
