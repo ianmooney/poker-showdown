@@ -5,7 +5,7 @@
 #   ['Sally', ['AC', '10C', '5C', '2S', '2C']]
 # ]
 class PokerShowdown
-  def self.play(input)
+  def self.run(input)
     begin
       game = build_game(input)
       puts "Winners: #{game.winning_player_names.join(', ')}"

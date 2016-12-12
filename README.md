@@ -23,11 +23,11 @@ Collection of winning players (more than one in case of a tie). For example:
 
 ### How to run
 
-In order to use this library you need to require `lib/poker-showdown.rb`. You can then call `PokerShowdown.play` to run a game. For example, in irb:
+In order to use this library you need to require `lib/poker-showdown.rb`. You can then call `PokerShowdown.run`. For example, in irb:
 
 ```
 > require './lib/poker-showdown'
-> PokerShowdown.play([
+> PokerShowdown.run([
     ['Joe',   ['3H', '4H', '5H', '6H', '8H']],
     ['Bob',   ['3C', '3D', '3S', '8C', '10D']],
     ['Sally', ['AC', '10C', '5C', '2S', '2C']]
@@ -47,5 +47,5 @@ rspec
 
 ### Assumptions
 
-- If two hands are tied, e.g. both are a Flush, then compare each hand's highest card to determine the winner. If both highest cards are equal, then compare the second highest cards, and so on.
-- If two hands tie with a One Pair, then compare the value of each pair to determine the winner. If equal, then compare highest cards as before. This also applies to Three of a Kind.
+- If two hands are tied, e.g. both are a Flush, then compare each hand's highest card to determine the winner. If both highest cards are equal, then compare the second highest card, and so on.
+- If two hands tie with a One Pair, then compare the value of each pair to determine the winner. If equal, then compare highest card as before. This also applies to Three of a Kind.
