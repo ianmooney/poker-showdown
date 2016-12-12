@@ -1,5 +1,3 @@
-require './lib/boot'
-
 # Example input:
 # [
 #   ['Joe',   ['3H', '4H', '5H', '6H', '8H']],

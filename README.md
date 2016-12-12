@@ -23,14 +23,10 @@ Collection of winning players (more than one in case of a tie). For example:
 
 ### How to run
 
-In order to use this library you need to require the `poker-showdown.rb` file. You can then call `PokerShowdown.play` to run a game.
-```
-cd poker-showdown/
-irb
-```
+In order to use this library you need to require `lib/poker-showdown.rb`. You can then call `PokerShowdown.play` to run a game. For example, in irb:
 
 ```
-> require './poker-showdown'
+> require './lib/poker-showdown'
 > PokerShowdown.play([
     ['Joe',   ['3H', '4H', '5H', '6H', '8H']],
     ['Bob',   ['3C', '3D', '3S', '8C', '10D']],
